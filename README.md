@@ -7,6 +7,9 @@ A Python tool that transcribes audio files, splits them into sentences, and prov
 -   Transcribe audio files using OpenAI's Whisper
 -   Split audio into sentence-level segments
 -   Millisecond-precise timing information
+-   Automatic sentence splitting with intelligent rules
+-   Maximum duration limits for segments (60 seconds)
+-   Support for splitting long sentences into parts
 -   JSON output with detailed timing data
 -   Individual audio files for each sentence
 -   Support for multiple audio formats
@@ -68,6 +71,13 @@ cd "/Applications/Python 3.11/Install Certificates.command"
 ./Install Certificates.command
 ```
 
+For Windows:
+
+```bash
+cd "C:\Users\YourUsername\AppData\Local\Programs\Python\Python311\python-3.11.X.X\python.exe"
+python -m certifi
+```
+
 ## Project Structure
 
 audio-sentence-splitter/
@@ -110,12 +120,12 @@ The `output.json` file contains an array of objects, each representing a sentenc
 ```json
 {
 	"sentence": "sentence text",
-	"duration": "HH:MM:SS.MS",
-	"start": "HH:MM:SS.MS",
-	"end": "HH:MM:SS.MS",
-	"start_ms": "milliseconds",
-	"end_ms": "milliseconds",
-	"duration_ms": "milliseconds"
+	"duration": "HH:MM:SS.SSS",
+	"start": "HH:MM:SS.SSS",
+	"end": "HH:MM:SS.SSS",
+	"start_sec": seconds,
+	"end_sec": seconds,
+	"duration_sec": seconds
 }
 ```
 
@@ -123,7 +133,7 @@ The `output.json` file contains an array of objects, each representing a sentenc
 
 Audio segments are saved as: `segment_001_0_5234.mp3`, where:
 
--   `001`: Segment number
+-   `001`: Segment number (zero-padded)
 -   `0`: Start time in milliseconds
 -   `5234`: End time in milliseconds
 
@@ -137,7 +147,13 @@ You can adjust the following parameters in `main.py`:
 splitter = AudioSplitter(model_size="base") # Options: tiny, base, small, medium, large
 ```
 
-2. Output paths:
+2. Maximum segment duration (in seconds):
+
+```python
+MAX_DURATION = 60  # Default is 60 seconds
+```
+
+3. Output paths:
 
 ```python
 output_json = "output.json"
