@@ -1,0 +1,6 @@
+numpy==1.24.3
+torch
+openai-whisper
+pydub
+ffmpeg-python
+certifi
