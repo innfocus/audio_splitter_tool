@@ -178,3 +178,107 @@ AudioSegment.converter = "/usr/local/bin/ffmpeg" # Use the path from which ffmpe
 -   ffmpeg-python
 -   numpy<2.0
 -   certifi
+
+## Export to Executable
+
+### Prerequisites for Creating Executable
+
+-   Python 3.11 or higher
+-   auto-py-to-exe package
+-   Windows OS (for .exe files)
+-   FFmpeg installed on your system
+
+### Installation Steps for auto-py-to-exe
+
+```bash
+pip install auto-py-to-exe
+```
+
+### Steps to Create Executable
+
+1. Run auto-py-to-exe:
+
+```bash
+auto-py-to-exe
+```
+
+2. In the auto-py-to-exe GUI:
+
+    - **Script Location**:
+
+        - Select your `main.py` file
+
+    - **One File/One Directory**:
+
+        - Choose "One Directory" (Recommended for first attempt)
+
+    - **Console Window**:
+
+        - Select "Window Based (hide the console)"
+
+    - **Additional Files**:
+
+        - Add the following folder:
+            ```
+            [Path to Python]/Lib/site-packages/whisper/assets -> whisper/assets
+            ```
+            Note: Replace [Path to Python] with your Python installation path
+
+    - **Advanced Options**:
+        - Add these Hidden Imports:
+            ```
+            whisper
+            pydub
+            tkinter
+            ```
+
+3. Click "Convert .py to .exe"
+
+4. Find your executable in the "Output Directory" specified in the GUI
+
+### Running the Executable
+
+1. Copy the entire output folder to your desired location
+2. Make sure FFmpeg is installed on the target system
+3. Double-click the .exe file to run the application
+
+### Common Issues and Solutions
+
+1. **Missing FFmpeg**:
+
+    - Install FFmpeg and add it to system PATH
+    - For Windows: `choco install ffmpeg`
+
+2. **Whisper Model Download**:
+
+    - On first run, the app will download the required model
+    - Ensure internet connection is available
+
+3. **Antivirus Warnings**:
+
+    - Your antivirus might flag the exe
+    - Add an exception or use "One Directory" mode
+
+4. **Missing Dependencies**:
+    - If using "One File" mode, try "One Directory" instead
+    - Check if all required DLLs are present
+
+### Notes
+
+-   The executable will be larger (300MB+) due to included dependencies
+-   First run might be slower due to model download
+-   Target system must have FFmpeg installed
+-   For development/testing, using "One Directory" mode is recommended
+-   For distribution, "One File" mode creates a single executable but takes longer to start
+
+### Troubleshooting
+
+If the executable fails to run:
+
+1. Try running from command prompt to see error messages
+2. Check if all dependencies are installed
+3. Verify FFmpeg is properly installed
+4. Ensure whisper assets are properly included
+5. Try rebuilding with "One Directory" option
+
+For any issues, check the console output or contact support.

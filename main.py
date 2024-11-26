@@ -7,7 +7,7 @@ import urllib.request
 import os
 import threading
 
-from processtor import AudioSplitter
+from processor import AudioSplitter
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
